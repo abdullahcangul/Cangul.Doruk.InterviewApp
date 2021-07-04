@@ -1,0 +1,23 @@
+<div class="container">
+  <table class="table table-bordered table-striped" >
+    <thead>
+      <tr>
+        <th scope="col">İş Emri</th>
+        <th scope="col" *ngFor="let key of keys">{{key}}</th>
+        <th scope="col">Toplam</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of stopReason">
+        <td scope="row" >{{item.workOrderNumber}}</td>
+        <td *ngFor="let currentItem of item.resultKeyValues|keyvalue">
+          {{currentItem.value}}
+        </td>
+        <td >{{item.totalWorkOrder}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
