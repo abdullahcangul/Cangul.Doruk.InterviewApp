@@ -171,32 +171,6 @@ namespace Cangul.Doruk.InterviewApp.Controllers
                 StartDate = new DateTime(2017, 01, 2, 18, 0, 0),
                 FinishDate = new DateTime(2017, 01, 2, 18, 10, 0),
             },
-
-             new StopReason()
-            {
-                StopReasonName = "Mola",
-                StartDate = new DateTime(2017, 01, 2, 12, 0, 0),
-                FinishDate = new DateTime(2017, 01, 2, 12, 30, 0),
-            },
-
-             new StopReason()
-            {
-                StopReasonName = "Arıza",
-                StartDate = new DateTime(2017, 01, 2, 13, 0, 0),
-                FinishDate = new DateTime(2017, 01, 2, 13, 45, 0),
-            },
-             new StopReason()
-            {
-                StopReasonName = "Mola",
-                StartDate = new DateTime(2017, 01, 2, 14, 0, 0),
-                FinishDate = new DateTime(2017, 01, 2, 14, 10, 0),
-            },
-             new StopReason()
-            {
-                StopReasonName = "Mola",
-                StartDate = new DateTime(2017, 01, 2, 18, 0, 0),
-                FinishDate = new DateTime(2017, 01, 2, 18, 10, 0),
-            },
              new StopReason()
             {
                 StopReasonName = "Arge",
@@ -315,7 +289,7 @@ namespace Cangul.Doruk.InterviewApp.Controllers
             result.TotalWorkOrder += CalculateTimeDiff(stopReason, workOrder);
         }
 
-        private static double CalculateTimeDiff(StopReason stopReason, WorkOrder workOrder)
+        private static double CalculateTimeDiff(StopReason stopReason, WorkOrder workOrder) 
         {
             DateTime StartDate = stopReason.StartDate;
             DateTime FinishDate = stopReason.FinishDate;
@@ -333,16 +307,34 @@ namespace Cangul.Doruk.InterviewApp.Controllers
 
         private static bool CheckBetweenTimeStartEndfinishDate(WorkOrder workOrder, StopReason stopReason)
         {
+            
+             /*Duruş Emir saat aralıkları dışında işe false içinde true dönen kayıt
+              *Daha sade ve anlasılır.
+             */
+             if(workOrder.StartDate>stopReason.StartDate && workOrder.StartDate > stopReason.FinishDate)
+             {
+                 return false;
+             }
+             if (workOrder.FinishDate < stopReason.StartDate && workOrder.FinishDate < stopReason.FinishDate)
+             {
+                 return false;
+             }
+             return true;
 
-            if (workOrder.StartDate >= stopReason.StartDate && workOrder.StartDate < stopReason.FinishDate)
-            {
-                return true;
-            }
-            else
-            {
-                return (stopReason.StartDate >= workOrder.StartDate
-                 && stopReason.StartDate < workOrder.FinishDate);
-            }
+            /*
+             * Eski algoritma => Doğru çalısıyor
+             * Biraz Daha karışık
+             if (workOrder.FinishDate >= stopReason.StartDate && workOrder.StartDate < stopReason.FinishDate)
+             {
+                 return true;
+             }
+             else
+             {
+                 return (stopReason.StartDate >= workOrder.StartDate
+                  && stopReason.StartDate < workOrder.FinishDate);
+             }
+            */
+
         }
     }
 }
