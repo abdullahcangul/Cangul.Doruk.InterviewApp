@@ -4,7 +4,8 @@ Uygulama Backend Teklojisi olarak Asp.Net Core ve Frondend Teknolojisi olarak An
 Bir makinaya ait iş emirleri ve bu makinanın duraksama bilgilerinden rapor oluşturup bunları ön tarafta göstermektedir.
 
 ## Images
-![image](https://user-images.githubusercontent.com/25364148/124379097-a6c83380-dcbd-11eb-815d-72d2dde264da.png)
+![image](https://user-images.githubusercontent.com/25364148/124973576-660d4900-e034-11eb-8bff-10c48ce31d4c.png)
+
 
 
 ## Installation
@@ -13,6 +14,12 @@ Ana dizinde bulunan Cangul.Doruk.InterviewApp dizininden visual studyo yardımı
 
 Ana dizinde yer alan client klasörünün alt dizine gelip cmd ile aşağıdaki kod satırını çalıştırınız.
 
+Gerekli bağımlılıklarımızı yüklüyoruz
+```bash
+npm install
+```
+
+Projeyi Başlatıyoruz
 ```bash
 ng serve -o
 ```
