@@ -8,7 +8,7 @@ namespace Cangul.Doruk.InterviewApp.models
     public class Result
     {
         public int WorkOrderNumber { get; set; }
-        public Dictionary<string, Double> ResultKeyValues { get; set; } = new Dictionary<string, Double>();
+        public SortedDictionary<string, Double> ResultKeyValues { get; set; } = new SortedDictionary<string, Double>();
         public double TotalWorkOrder { get; set; }
     }
 }

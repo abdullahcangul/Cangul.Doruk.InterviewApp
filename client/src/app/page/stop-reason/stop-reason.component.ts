@@ -25,7 +25,6 @@ export class StopReasonComponent implements OnInit {
       for (const item in data[0].resultKeyValues) {
         this.keys.push(item);
       }
-      this.keys=this.keys.sort();
 
       data[data.length-1].workOrderNumber="Toplam";
       this.stopReason=data;

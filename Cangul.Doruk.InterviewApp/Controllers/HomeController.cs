@@ -10,7 +10,6 @@ namespace Cangul.Doruk.InterviewApp.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        public static List<Result> Results { get; set; } = new List<Result>();
 
         public static List<WorkOrder> WorkOrders { get; set; } = new List<WorkOrder>()
         {
@@ -227,10 +226,6 @@ namespace Cangul.Doruk.InterviewApp.Controllers
             },
         };
 
-        public static HashSet<String> Keys { get; set; } = new HashSet<String>();
-
-
-
         [HttpGet]
         public IActionResult Get()
         {
@@ -239,7 +234,9 @@ namespace Cangul.Doruk.InterviewApp.Controllers
 
         private static List<Result> CreateResultList()
         {
-            Results = new List<Result>();
+            List<Result> Results = new List<Result>();
+            HashSet<String> Keys = new HashSet<String>();
+
             foreach (var workOrder in WorkOrders)
             {
                 var result = new Result();
@@ -261,13 +258,13 @@ namespace Cangul.Doruk.InterviewApp.Controllers
                 Results.Add(result);
             }
 
-            AddSumResultsLastIndex();
+            AddSumResultsLastIndex(ref Results,ref Keys);
             return  Results ;
         }
 
-        private static void AddSumResultsLastIndex()
+        private static void AddSumResultsLastIndex(ref List<Result> Results,ref HashSet<String> Keys)
         {
-            Dictionary<String, double> SumDictionary = new Dictionary<string, double>();
+            SortedDictionary<String, double> SumDictionary = new SortedDictionary<string, double>();
 
             foreach (var key in Keys)
             {
@@ -278,15 +275,17 @@ namespace Cangul.Doruk.InterviewApp.Controllers
 
         private static void AddDictionaryValue(Result result, StopReason stopReason, WorkOrder workOrder)
         {
+            Double timeDiff= CalculateTimeDiff(stopReason, workOrder);
+
             if (result.ResultKeyValues.ContainsKey(stopReason.StopReasonName))
             {
-                result.ResultKeyValues[stopReason.StopReasonName] += CalculateTimeDiff(stopReason, workOrder);
+                result.ResultKeyValues[stopReason.StopReasonName] += timeDiff;
             }
             else
             {
-                result.ResultKeyValues.Add(stopReason.StopReasonName, CalculateTimeDiff(stopReason, workOrder));
+                result.ResultKeyValues.Add(stopReason.StopReasonName, timeDiff);
             }
-            result.TotalWorkOrder += CalculateTimeDiff(stopReason, workOrder);
+            result.TotalWorkOrder += timeDiff;
         }
 
         private static double CalculateTimeDiff(StopReason stopReason, WorkOrder workOrder) 
