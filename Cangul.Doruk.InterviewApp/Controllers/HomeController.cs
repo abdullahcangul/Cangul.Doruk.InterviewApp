@@ -235,7 +235,6 @@ namespace Cangul.Doruk.InterviewApp.Controllers
         private static List<Result> CreateResultList()
         {
             List<Result> Results = new List<Result>();
-            HashSet<String> Keys = new HashSet<String>();
 
             foreach (var workOrder in WorkOrders)
             {
@@ -246,7 +245,6 @@ namespace Cangul.Doruk.InterviewApp.Controllers
                 {
                     if (CheckBetweenTimeStartEndfinishDate(workOrder, stopReasons))
                     {
-                        Keys.Add(stopReasons.StopReasonName);
                         AddDictionaryValue(result, stopReasons, workOrder);
                     }
                     else
@@ -258,17 +256,17 @@ namespace Cangul.Doruk.InterviewApp.Controllers
                 Results.Add(result);
             }
 
-            AddSumResultsLastIndex(ref Results,ref Keys);
+            AddSumResultsLastIndex(ref Results);
             return  Results ;
         }
 
-        private static void AddSumResultsLastIndex(ref List<Result> Results,ref HashSet<String> Keys)
+        private static void AddSumResultsLastIndex(ref List<Result> Results)
         {
             SortedDictionary<String, double> SumDictionary = new SortedDictionary<string, double>();
 
-            foreach (var key in Keys)
+            foreach (var item in Results[0].ResultKeyValues)
             {
-                SumDictionary.Add(key, Results.Sum(x => x.ResultKeyValues[key]));
+                SumDictionary.Add(item.Key, Results.Sum(x => x.ResultKeyValues[item.Key]));
             }
             Results.Add(new Result() { WorkOrderNumber = 0, TotalWorkOrder = Results.Sum(x => x.TotalWorkOrder), ResultKeyValues = SumDictionary });
         }
